@@ -118,7 +118,7 @@ class UserController extends Controller {
   async editUserInfo() {
     // 主要修改用户个性签名
     const { ctx, app } = this;
-    const { signature = '' } = ctx.request.body;
+    const { signature = '', avatar = '' } = ctx.request.body;
     try {
       const token = ctx.request.header.authorization;
       const decode = await app.jwt.verify(token, app.config.jwt.secret);
@@ -128,6 +128,7 @@ class UserController extends Controller {
       await ctx.service.user.editUserInfo({
         ...userInfo,
         signature,
+        avatar,
       });
 
       ctx.body = {
@@ -137,6 +138,7 @@ class UserController extends Controller {
           id: user_id,
           signature,
           username: userInfo.user_name,
+          avatar,
         },
       };
     } catch (error) {
