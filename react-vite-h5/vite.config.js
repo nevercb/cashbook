@@ -9,15 +9,16 @@ export default defineConfig({
   plugins: [react(), createStyleImportPlugin({
     libs:[
       {
-        librayName: 'zarm',
+        libraryName: "zarm",
         esModule: true,
         resolveStyle: (name) => {
-          return `zarm/es/${name}/style/css`;
+          console.log("successfully resolve")
+          return `zarm/es/${name}/style/css`
         }
       }
     ]
-  })],
-    css: {
+  })],  
+  css: {
       modules: {
         localsConvention: 'dashesOnly'
       }, 
@@ -31,7 +32,8 @@ export default defineConfig({
           postCssPxToRem({
             rootValue:37,
             propList:['*']
-          })
+          }),
+          
         ]
       }
     },
@@ -49,5 +51,5 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'),
       'utils': path.resolve(__dirname, 'src/utils')
     }
-  }
+  },
 })

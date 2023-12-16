@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom/client'
 import 'amfe-flexible/index.js'
 import './index.css'
 import App from './App.jsx'
-
+import {
+  BrowserRouter as Router,
+} from "react-router-dom"
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>,
 )

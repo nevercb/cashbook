@@ -10,20 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@babel/runtime": "^7.23.6",
     "amfe-flexible": "^2.2.1",
     "axios": "^1.6.2",
-    "consola": "^3.2.3",
     "lib-flexible": "^0.3.2",
     "postcss-pxtorem": "^6.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.0",
-    "zarm": "^3.0.18-alpha.0"
+    "zarm": "^2.7.3"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@vitejs/plugin-react": "^4.2.1",
+    "consola": "^3.2.3",
     "eslint": "^8.55.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
