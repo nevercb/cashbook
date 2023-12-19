@@ -1,0 +1,42 @@
+.item {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    .header-date {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5px;
+      div {
+        color: rgba(0, 0, 0, 0.9);
+      }
+      .date {
+        font-weight: bold;
+        font-size: 16px;
+      }
+      .money {
+        > span {
+          margin-right: 20px;
+        }
+      }
+    }
+    :global {
+      .za-cell {
+        &::after {
+          left: 0;
+        }
+        .za-cell__title {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+    .item-icon {
+      font-size: 24px;
+      color: #007fff;
+      vertical-align: -2px;
+      margin-right: 2px;
+    }
+  }

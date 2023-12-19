@@ -37,7 +37,7 @@ class UserController extends Controller {
     if (result) {
       ctx.body = {
         code: 200,
-        mgs: 'access',
+        msg: 'access',
         data: null,
       };
     } else {

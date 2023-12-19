@@ -18,7 +18,7 @@ function App() {
   const location = useLocation()
   const { pathname } = location
   const needNav = ['/', '/data', '/user']
-  const [showNav, setShowNav] = useState(false)
+  const [showNav, setShowNav] = useState(location.pathname)
   useEffect(() => {
     setShowNav(needNav.includes(pathname))
   }, [pathname]) 
