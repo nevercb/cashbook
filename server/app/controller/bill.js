@@ -84,7 +84,7 @@ class BillController extends Controller {
         return curr;
       }, []).sort((a, b) => moment(b.date) - moment(a.date));
 
-      const filterListMap = listMap.slice((page - 1) * page.size, page * page_size);
+      const filterListMap = listMap.slice((page - 1) * page.size, page_size);
 
       const __list = list.filter(item => moment(Number(item.date)).format('YYYY-MM') === date);
 

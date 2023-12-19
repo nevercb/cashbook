@@ -31,7 +31,7 @@ const login = () => {
         }
         try {
             if (type === 'login'){
-                const { data } = await post('/api/user/login', {
+                const { data } = await post('user/login', {
                     username,
                     password
                 });
@@ -54,7 +54,7 @@ const login = () => {
                     alert('两次密码输入不一致')
                     return
                 }
-                const { data } = await post('/api/user/register', {
+                const { data } = await post('/user/register', {
                     username,
                     password
                 })

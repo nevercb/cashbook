@@ -1,7 +1,22 @@
-import axios from "axios"
+import axios from "./axio"
 export const get = axios.get
 export const post = axios.post
-
+export const REFRESH_STATE = {
+    normal: 0,
+    pull: 1,
+    drop: 2,
+    loading: 3,
+    success: 4,
+    failure: 5
+}
+export const LOAD_STATE = {
+    normal: 0,
+    abort: 1,
+    loading: 2,
+    success: 3,
+    failure: 4,
+    complete: 5
+}
 export const typeMap = {
     1: {
         icon: 'canyin'

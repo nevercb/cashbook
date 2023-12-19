@@ -1,26 +1,53 @@
+/* eslint-disable no-unused-vars */
 import {Icon, Pull} from 'zarm'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import dayjs from 'dayjs'
 import BillItem from '@/components/BillItem'
 import { get, REFRESH_STATE, LOAD_STATE } from '@/utils'
 
 import s from './style.module.less'
 const Home = () => {
-    const [list, setList] = useState([{
-        bills: [
-            {
-                amount: "25.00",
-                date: "1702966935805",
-                id: 911,
-                pay_type: 1,
-                remark: "",
-                type_id: 1,
-                type_name: "餐饮"
-            }
-        ],
-        date: "2023-12-19"
-    }])
+    const [currentTime, setCurrentTime] = useState(dayjs().format('YYYY-MM'))
+    const [page, setPage] = useState(1)
+    const [list, setList] = useState([])
+    const [totalPage, setTotalPage] = useState(0)
+    const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal)
+    const [loading, setLoading] = useState(LOAD_STATE.normal)
 
+    useEffect(()=>{
+        getBillList()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const getBillList = async () => {
+        const { data } = await get(`/bill/list?page=${page}&page_size=1&date=${currentTime}`);
+        if(page === 1){
+            setList(data.list);
+        } else {
+            setList(list.concat(data.list));
+        }
+        setTotalPage(data.totalPage)
+        setLoading(LOAD_STATE.success)
+        setRefreshing(REFRESH_STATE.success)
+    }
+
+    const refreshData = ()=>{
+        setRefreshing(REFRESH_STATE.loading)
+        if(page != 1){
+            setPage(1)
+        } else {
+            getBillList()
+        }
+    }
+
+    const loadData = ()=>{
+        console.log(1)
+        if (page < totalPage) {
+            setLoading(LOAD_STATE.loading)
+            setPage(page + 1)
+            getBillList()
+        }
+    }
     return <div className={s.home}>
         <div className={s.header}>
             <div className={s.dataWrap}>
@@ -43,7 +70,23 @@ const Home = () => {
 
         <div className={s.contentMap}>
                 {
-                    list.map((item, index) => <BillItem bill={item} key={index} />)
+                    list.length ? <Pull
+                        animationDuration={200}
+                        stayTime={400}
+                        refresh={{
+                            state: refreshing,
+                            handler: refreshData
+                        }}
+                        load={{
+                            state: loading,
+                            distance: 200,
+                            handler: loadData
+                        }}
+                    >
+                        {
+                            list.map((item, index) => <BillItem bill={item} key={index} />)
+                        }
+                    </Pull>: null
                 }
         </div>
     </div>
