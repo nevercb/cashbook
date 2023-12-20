@@ -31,12 +31,12 @@ const login = () => {
         }
         try {
             if (type === 'login'){
-                const { data } = await post('user/login', {
+                const { data, msg} = await post('/user/login', {
                     username,
                     password
                 });
-                alert(data.msg)
-                localStorage.setItem('token', data.data.token)
+                alert(msg)
+                localStorage.setItem('token', data.token)
             }else {
                 if (!verify){
                     alert('请输入验证码')
@@ -54,14 +54,15 @@ const login = () => {
                     alert('两次密码输入不一致')
                     return
                 }
-                const { data } = await post('/user/register', {
+                const { data, msg} = await post('/user/register', {
                     username,
                     password
                 })
-                alert(data.msg)
+                alert(msg)
                 setType('login')
             }
         } catch (err) {
+            console.log(err)
             alert('请求错误')
         }
     }

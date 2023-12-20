@@ -17,7 +17,7 @@ const Home = () => {
     useEffect(()=>{
         getBillList()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [page])
 
     const getBillList = async () => {
         const { data } = await get(`/bill/list?page=${page}&page_size=1&date=${currentTime}`);
@@ -45,7 +45,7 @@ const Home = () => {
         if (page < totalPage) {
             setLoading(LOAD_STATE.loading)
             setPage(page + 1)
-            getBillList()
+            // getBillList()  如果直接获取page, 则没有更改
         }
     }
     return <div className={s.home}>
