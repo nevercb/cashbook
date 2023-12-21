@@ -38,12 +38,12 @@ const BillItem = ({ bill }) => {
         <div className={s.headerDate}>
             <span className={s.date}>{bill.date}</span>
             <span className={s.money}>
-                <span>
-                    <span>支出</span>
+                <span className={s.sp}>
+                    <span>expense: </span>
                     <span>{expense.toFixed(2)}</span>
                 </span>
-                <span>
-                    <span>收入</span>
+                <span className={s.sp}>
+                    <span>income: </span>
                     <span>{income.toFixed(2)}</span>
                 </span>
             </span>
