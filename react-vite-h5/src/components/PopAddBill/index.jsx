@@ -10,7 +10,7 @@ import PopupDate from '../PopupDate'
 import {get, post, typeMap} from '@/utils'
 import s from './style.module.less'
 // eslint-disable-next-line react/prop-types
-const PopupAddBill = forwardRef(({onReload}, ref)=>{
+const PopupAddBill = forwardRef(({detail = {}, onReload}, ref)=>{
     const [show, setShow] = useState(false)
     const [payType, setPayType] = useState('expense')
     const [amount, setAmount] = useState('')
@@ -21,6 +21,21 @@ const PopupAddBill = forwardRef(({onReload}, ref)=>{
     const [income, setIncome] = useState([])
     const [remark, setRemark] = useState('')
     const [showRemark, setShowRemark] = useState(false)
+    const id = detail && detail.id;
+
+    useEffect(() => {
+        if (detail && detail.id) {
+            setPayType(detail.pay_type == 1 ? 'expense': 'income')
+            setCurrentType({
+                id: detail.type_id,
+                name: detail.type_name
+            })
+            setRemark(detail.remark)
+            setAmount(detail.amount)
+            setDate(dayjs(Number(detail.date)))
+        }
+    }, [detail])
+
     useEffect(() => {
         async function fn(){
             const {data} = await get('/type/list')
@@ -28,7 +43,8 @@ const PopupAddBill = forwardRef(({onReload}, ref)=>{
             const _income = data.filter(i => i.type == 2)
             setExpense(_expense)
             setIncome(_income)
-            setCurrentType(_expense[0])
+            if(!id)
+                setCurrentType(_expense[0])
         }
         fn()
     },[])
@@ -74,11 +90,17 @@ const PopupAddBill = forwardRef(({onReload}, ref)=>{
             pay_type: payType == 'expense' ? 1: 2,
             remark: remark || ' '
         }
-        await post('/bill/add', params)
-        setAmount('')
-        setDate(new Date())
-        setRemark('')
-        Toast.show('添加成功')
+        if(id) {
+            params.id = id;
+            await post('/bill/update', params)
+            Toast.show('修改成功')
+        } else {
+            await post('/bill/add', params)
+            setAmount('')
+            setDate(new Date())
+            setRemark('')
+            Toast.show('添加成功')
+        }
         setShow(false) 
         onReload()
     }
